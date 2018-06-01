@@ -27,20 +27,46 @@ public class Main {
         OVChipkaart kaart = new OVChipkaart();
         kaart.setKaartopdruk("mijn eerste kaart");
         
+        OVChipkaart kaart2 = new OVChipkaart();
+        kaart2.setKaartopdruk("Van: Pieter");
+        
         Reiziger persoon = new Reiziger();
         persoon.setVoorl("Henk");
         persoon.setAchternaam("Boompjes");
         persoon.setGBdatum(Date.valueOf("1977-05-22"));
-        
         persoon.setReizigerOVChipkaart(kaart);
+        
+        Reiziger persoon2 = new Reiziger();
+        persoon2.setVoorl("Piet");
+        persoon2.setTussenvoegsel("van");
+        persoon2.setAchternaam("Acht");
+        persoon2.setGBdatum(Date.valueOf("1955-10-10"));
+        persoon2.setReizigerOVChipkaart(kaart2);
+        
+        
         /*
          * Opslaan van de data in de domein objecten
          */
         em.getTransaction().begin();
+        
         em.persist(kaart);
+        em.persist(kaart2);
+        
         em.persist(persoon);
+        em.persist(persoon2);
+        
+        Reiziger reisUitDB1 = em.find(Reiziger.class, persoon.getID());
+        System.out.println("Reiziger gelezen: " + reisUitDB1);
+        
+        Reiziger reisUitDB2 = em.find(Reiziger.class, persoon2.getID());
+        System.out.println("Reiziger gelezen: " + reisUitDB2);
+        
+        em.remove(persoon2);
+        
         em.getTransaction().commit();
-
+        
+        System.out.println("Reiziger 2 verwijdert: " + persoon2);
+        
         em.close();
         System.out.println("-- einde --");
     }
