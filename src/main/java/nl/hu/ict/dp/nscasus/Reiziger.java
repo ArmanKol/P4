@@ -1,44 +1,29 @@
 package nl.hu.ict.dp.nscasus;
 
-import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
 
 @Entity
 @Table(name = "reiziger")
 public class Reiziger {
-
-    @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "reiziger_Sequence")
-    @SequenceGenerator(name = "reiziger_Sequence", sequenceName = "REIZIGER_SEQ")
-    private int id;
-    private String voorletter, tussenvoegsel, achternaam;
+	private String voorletter, tussenvoegsel, achternaam;
 	private Date gbdatum;
 	
-	@ManyToOne
-	@JoinColumn(name = "kaartnr")
-	private OVChipkaart reizigerOVChipkaart;
+	@SequenceGenerator(name = "reiziger_Sequence", sequenceName = "REIZIGER_SEQ")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "reiziger_Sequence")
+	@Id private int id;
 	
-	public void setVoorl(String voorl) {
-		voorletter = voorl;
-	}
+	private ArrayList<OVChipkaart> listOVC = new ArrayList<OVChipkaart>();
 	
-	public void setTussenvoegsel(String tussenvoegsel) {
-		this.tussenvoegsel = tussenvoegsel;
-	}
-	
-	public void setAchternaam(String achternaam) {
-		this.achternaam = achternaam;
-	}
-	
-	public void setGBdatum(Date geboortedatum) {
-		this.gbdatum = geboortedatum;
-	}
-
-    public void setId(int id) {
-    	this.id = id;
-    }
-	
-    public String getVoorletter() {
+	public String getVoorletter() {
 		return this.voorletter;
 	}
 	
@@ -67,24 +52,44 @@ public class Reiziger {
 		return volledigeNaam;
 	}
 	
-	public Date getGBdatum() {
-		return gbdatum;
+	public ArrayList<OVChipkaart> getOVChipkaartList() {
+		return listOVC;
 	}
 	
-	public int getID() {
-		return id;
+	public void setId(int id) {
+		this.id = id;
 	}
-	//@OneToMany
-	@JoinColumn(name="reiziger_fk")
-	public OVChipkaart getReizigerOVChipkaart() {
-		return reizigerOVChipkaart;
+	
+	public int getId() {
+		return this.id;
 	}
-
-	public void setReizigerOVChipkaart(OVChipkaart reizigerOVChipkaart) {
-		this.reizigerOVChipkaart = reizigerOVChipkaart;
+	
+	public Date getGBdatum() {
+		return this.gbdatum;
+	}
+	
+	public void setGBdatum(Date gbdm) {
+		this.gbdatum = gbdm;
+	}
+	
+	public void setVoorl(String voorl) {
+		this.voorletter = voorl;
+	}
+	
+	public void setAchternaam(String achternaam) {
+		this.achternaam = achternaam;
+	}
+	
+	public void setTussenvoegsel(String tussenvoegsel) {
+		this.tussenvoegsel = tussenvoegsel;
+	}
+	
+	public void setReizigerOVChipkaart(OVChipkaart kaart) {
+		this.listOVC.add(kaart);
+		
 	}
 	
 	public String toString() {
-		return "Reiziger{naam= " + getNaam() + " Geboortedatum= " + gbdatum + " ID= " + id + "}";
+		return "[ id: " + getId() + "] [naam: " + getNaam() + "] [geboortedatum: " + gbdatum + "]";
 	}
 }

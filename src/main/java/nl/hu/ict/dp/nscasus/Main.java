@@ -55,10 +55,10 @@ public class Main {
         em.persist(persoon);
         em.persist(persoon2);
         
-        Reiziger reisUitDB1 = em.find(Reiziger.class, persoon.getID());
+        Reiziger reisUitDB1 = em.find(Reiziger.class, persoon.getId());
         System.out.println("Reiziger gelezen: " + reisUitDB1);
         
-        Reiziger reisUitDB2 = em.find(Reiziger.class, persoon2.getID());
+        Reiziger reisUitDB2 = em.find(Reiziger.class, persoon2.getId());
         System.out.println("Reiziger gelezen: " + reisUitDB2);
         
         em.remove(persoon2);
