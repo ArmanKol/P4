@@ -1,5 +1,4 @@
 package nl.hu.ict.dp.nscasus;
-import java.sql.Date;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -24,48 +23,36 @@ public class Main {
         /*
          * Aanmaken van de domein objecten
          */
-        OVChipkaart kaart = new OVChipkaart();
-        kaart.setKaartopdruk("mijn eerste kaart");
         
-        OVChipkaart kaart2 = new OVChipkaart();
-        kaart2.setKaartopdruk("Van: Pieter");
+        OVChipkaart kaart1 = new OVChipkaart();
+        kaart1.setKaartopdruk("mijn ovchipkaart");
         
-        Reiziger persoon = new Reiziger();
-        persoon.setVoorl("Henk");
-        persoon.setAchternaam("Boompjes");
-        persoon.setGBdatum(Date.valueOf("1977-05-22"));
-        persoon.setReizigerOVChipkaart(kaart);
+        Reiziger reiziger = new Reiziger();
         
-        Reiziger persoon2 = new Reiziger();
-        persoon2.setVoorl("Piet");
-        persoon2.setTussenvoegsel("van");
-        persoon2.setAchternaam("Acht");
-        persoon2.setGBdatum(Date.valueOf("1955-10-10"));
-        persoon2.setReizigerOVChipkaart(kaart2);
+        Reiziger reiziger2 = new Reiziger(1, "A", "Kol");
         
+        reiziger.addOVChipkaart(kaart1);
         
         /*
          * Opslaan van de data in de domein objecten
          */
         em.getTransaction().begin();
         
-        em.persist(kaart);
-        em.persist(kaart2);
+        em.persist(kaart1);
         
-        em.persist(persoon);
-        em.persist(persoon2);
+        em.merge(reiziger2);
         
-        Reiziger reisUitDB1 = em.find(Reiziger.class, persoon.getId());
+        Reiziger reisUitDB1 = em.find(Reiziger.class, reiziger.getID());
         System.out.println("Reiziger gelezen: " + reisUitDB1);
         
-        Reiziger reisUitDB2 = em.find(Reiziger.class, persoon2.getId());
+        Reiziger reisUitDB2 = em.find(Reiziger.class, reiziger2.getID());
         System.out.println("Reiziger gelezen: " + reisUitDB2);
         
-        em.remove(persoon2);
+        em.remove(reiziger);
         
         em.getTransaction().commit();
         
-        System.out.println("Reiziger 2 verwijdert: " + persoon2);
+        System.out.println("Reiziger 2 verwijdert: " + reiziger2);
         
         em.close();
         System.out.println("-- einde --");

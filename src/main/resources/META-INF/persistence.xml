@@ -8,8 +8,8 @@
             Hibernate using Oracle
         </description>
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-		<class>nl.hu.ict.dp.nscasus.OVChipkaart_old</class>
-		<class>nl.hu.ict.dp.nscasus.Reiziger_old</class>
+		<class>nl.hu.ict.dp.nscasus.OVChipkaart</class>
+		<class>nl.hu.ict.dp.nscasus.Reiziger</class>
 		
 
 		<properties>
